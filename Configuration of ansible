@@ -1,0 +1,71 @@
+First we need to perform below mentioned pre-steps for configuration of Ansible Configuration Master (ACM and Hosts)
+
+=========
+Enable SSH 
+
+vim /etc/ssh/sshd_Config
+i
+remove the # for  password Authentication Yes
+Add # for 	  password Authentication No
+:wq!
+
+=========
+Set password for user account, in current case i am setting for existing user account. 
+
+passwd user_id
+provide password when asked
+
+=========
+Provide access to user account. 
+
+vim /etc/sudoers
+i
+under root user give this 
+
+user_id = ALL=PASSWD: ALL
+:wq!
+
+========
+Restart sshd on server. 
+-------
+
+Systemctl restart sshd
+
+==========
+
+Once above 4 steps are configured on both ACM and host generate key and 
+
+on Ansible master, 
+
+Login with account set earlier in step 1 
+
+su user_id 
+provide password
+
+once logged in as user, 
+
+ssh-keygen
+
+press enter
+press enter
+press enter
+
+ssh key will be generated
+
+Step 2: copy key on to the host
+
+	# ssh-copy-id -i ec2-user@private ip of host
+
+press yes
+enter passowrd ==>
+
+ssh connection will be done
+In the message we will have a command to loginto the host from ACM, execute it
+
+	# ssh 'ec2-user@172.31.35.169'
+
+we will be connected to the host
+
+exit
+back to ACM
+
